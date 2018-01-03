@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './demo/main.js',
+  entry: './example/main.js',
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist')
@@ -19,7 +19,7 @@ module.exports = {
         query: {
           presets: ['env']
         },
-        include: path.resolve(__dirname, 'demo')
+        include: path.resolve(__dirname, 'example')
       },
       {
         test: /\.(?:png|jpg|gif|svg)$/i,
@@ -32,20 +32,25 @@ module.exports = {
       {
         test: /\.vue$/,
         loader: 'vue-loader',
-        include: path.resolve(__dirname, 'demo')
+        include: path.resolve(__dirname, 'example')
       },
       {
         test: /\.css$/,
         loader: 'style-loader!css-loader',
-        include: path.resolve(__dirname, 'demo')
+        include: path.resolve(__dirname, 'example')
       }
     ]
   },
   plugins: [
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: './demo/index.html',
+      template: './example/index.html',
       inject: 'body'
     })
-  ]
+  ],
+  resolve: {
+    alias: { 
+      vue: 'vue/dist/vue.js'
+    }
+  }
 };

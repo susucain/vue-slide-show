@@ -1,6 +1,10 @@
 <template>
   <div class="banner" :style="{width: bannerWidth}">
-      <div class="wrapper" :style="{width: `${width}px`, height: `${height}px`}">
+      <div 
+        class="wrapper" 
+        :style="{width: `${width}px`, height: `${height}px`}"
+        @mouseover="stopPlay"
+        @mouseout="startAutoplay">
         <div 
           v-for="(item, index) in slides" 
           :key="index" 
@@ -8,11 +12,11 @@
           @click="goto(index)">
         </div>
       </div>
-    <ul class="button" id="lightButton" :style="buttonStyle">
+    <ul class="button" :style="buttonStyle">
       <li 
         v-for="(item, index) in slides" 
-        :class="{light: nowIndex === index}"
-        @click="goto(index)">
+        @click="goto(index)"
+        :style="{background: nowIndex === index? lightBackground: buttonBackground}">
       </li>
     </ul>
   </div>
@@ -38,11 +42,11 @@ export default {
       default: false
     },
     width: {
-      type: [Number, String],
+      type: Number,
       default: 300
     },
     height: {
-      type: [Number, String],
+      type: Number,
       default: 270
     },
     bannerWidth: {
@@ -54,7 +58,7 @@ export default {
       default: false
     },
     inverseScaling: {
-      type: [Number, String],
+      type: Number,
       default: 300
     },
     autoplayTimeout: {
@@ -67,12 +71,18 @@ export default {
     },
     buttonStyle: {
       type: Object,
-      default: {}
+      default () {
+        return {}
+      }
     },
-    showNav: {
-      type: Boolean,
-      default: true
+    buttonBackground: {
+      type: String,
+      default: 'rgba(255, 255, 255, .3)'
     },
+    lightBackground: {
+      type: String,
+      default: '#01BDFF'
+    }
   },
   data () {
     return {
@@ -101,11 +111,6 @@ export default {
     },
     
   },
-  watch: {
-    items () {
-      
-    }
-  },
   methods: {
     goto (index) {
       let move = index - this.nowIndex;
@@ -119,9 +124,16 @@ export default {
       return arr.slice(move).concat(arr.slice(0, move))
     },
     startAutoplay () {
-      this.autoplayId = setInterval(() => {
-        this.goto(this.nextIndex)
-      }, this.autoplayTimeout)
+      if (this.autoplay) {
+        this.autoplayId = setInterval(() => {
+          this.goto(this.nextIndex)
+        }, this.autoplayTimeout)
+      }
+    },
+    stopPlay () {
+      if (this.autoplayId) {
+        clearInterval(this.autoplayId)
+      }
     },
     setSlideStyle (i) {
       let styles = {}
@@ -155,11 +167,22 @@ export default {
       const x = this.space === 'auto' 
         ? i * (this.width / 1.5)
         : i * parseInt(this.space, 10) / 1.5
-      const y = this.disable3d? 0: -(i * 23)
+      const y = -(i * 23)
       const z = -Math.abs(i) * this.inverseScaling
-      
-      return {
-        transform: `translateX(${x}px) translateZ(${z}px) rotateY(${y}deg)`
+
+      if (this.disable3d) {
+        let count = 1 / (Math.abs(i) + 1)
+        const scale = count === 1? 1: count + 0.3
+
+        return {
+          'transform': `translateX(${x}px) scale(${scale})`,
+          'z-index': (this.displayCount + 1) * 2 / (Math.abs(i) + 1)
+        }
+      }
+      else {
+        return {
+          transform: `translateX(${x}px) translateZ(${z}px) rotateY(${y}deg)`
+        }
       }
     },
   },
@@ -177,7 +200,6 @@ export default {
     if (this.autoplay) {
       this.startAutoplay()
     }
-    console.log(this.$el.clientWidth)
   }
 }
 </script>
@@ -186,6 +208,7 @@ export default {
   .banner {
     position: relative;
     overflow: hidden;
+    margin: 0 auto;
   }
 
   .banner .wrapper {
@@ -196,7 +219,7 @@ export default {
     backface-visibility:hidden;
   }
 
-  .wrapper div {
+  .banner .wrapper div {
     position: absolute;
   }
 
@@ -211,12 +234,7 @@ export default {
     height: 6px;
     border-radius: 50%;
     margin-right: 5px;
-    background: rgba(255, 255, 255, .3);
     border: 1px solid rgba(0, 0, 0, .2);
     cursor: pointer;
-  }
-
-  .banner .button .light {
-    background: #01BDFF;
   }
 </style>

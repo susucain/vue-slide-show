@@ -6,30 +6,16 @@
 </head>
 <body>
   <div class="app">
-    <!-- <slide-show :slides="slides" :inv="invTime" :auto-play="autoPlay"></slide-show> -->
-    <carousel-3d :autoplay="autoplay" :space="space">
-      <slide :index="0">
-        Slide 1 Content
-      </slide>
-      <slide :index="1">
-        Slide 2 Content
-      </slide>
-      <slide :index="2">
-        Slide 3 Content
-      </slide>
-      <slide :index="3">
-        Slide 4 Content
-      </slide>
-      <slide :index="4">
-        Slide 5 Content
-      </slide>
-      <slide :index="5">
-        Slide 6 Content
-      </slide>
-      <slide :index="6">
-        Slide 7 Content
-      </slide>
-    </carousel-3d>
+    <slide-show 
+      :slides="slides" 
+      :animation-speed="animationSpeed" 
+      :autoplay="autoplay"
+      :display-count="displayCount"
+      :space="space"
+      :button-style="buttonStyle"
+      :banner-width="bannerWidth"
+      :disable3d="disable3d">
+    </slide-show>
   </div>
 <script type="text/javascript" src="main.bundle.js"></script></body>
 </html>
