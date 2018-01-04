@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import SlideShow from './vue-slide-show.vue'
+import SlideShow from '../src/vue-slide-show.vue'
 
 new Vue({
   el: '.app-0',

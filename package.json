@@ -1,11 +1,15 @@
 {
   "name": "vue-slide-show",
   "version": "1.0.0",
-  "description": "vue-slide-show is a slider comonent of Vue.js.",
-  "main": "index.js",
+  "description": "A slider component for vue.js.",
+  "main": "dist/vue-slide-show.js",
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress",
-    "build": "webpack  --progress --colors"
+    "dev": "webpack-dev-server --config ./webpack.dev.config.js --hot --inline",
+    "build": "webpack --progress --colors"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:susucain/vue-slide-show.git"
   },
   "keywords": [
     "vue",
@@ -14,6 +18,10 @@
   ],
   "author": "Jeffery",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/susucain/vue-slide-show/issues"
+  },
+  "homepage": "https://github.com/susucain/vue-slide-show#readme",
   "devDependencies": {
     "css-loader": "^0.28.7",
     "style-loader": "^0.19.1",

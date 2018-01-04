@@ -1,56 +1,44 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path')
+const webpack = require('webpack')
 
 module.exports = {
-  entry: './example/main.js',
+  entry: './src/index.js',
   output: {
-    filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist')
-  },
-  devtool: 'inline-source-map',
-  devServer: {
-    contentBase: './dist'
+    filename: 'vue-slide-show.js',
+    path: path.resolve(__dirname, 'dist'),
+    library: 'vue-slide-show',
+    libraryTarget: 'umd'
   },
   module: {
     loaders: [
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader',
+        exclude: path.resolve(__dirname, 'node_modules')
+      },
       {
         test: /\.js$/,
         loader: 'babel-loader',
         query: {
           presets: ['env']
         },
-        include: path.resolve(__dirname, 'example')
-      },
-      {
-        test: /\.(?:png|jpg|gif|svg)$/i,
-        loader: 'file-loader',
-        query: {
-          name: 'assets/[name].[ext]'
-        },
-        exclude: path.resolve(__dirname, 'node_modules'),
-      },
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader',
-        include: path.resolve(__dirname, 'example')
+        exclude: path.resolve(__dirname, 'node_modules')
       },
       {
         test: /\.css$/,
         loader: 'style-loader!css-loader',
-        include: path.resolve(__dirname, 'example')
+        exclude: path.resolve(__dirname, 'node_modules')
       }
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: './example/index.html',
-      inject: 'body'
+    new webpack.optimize.UglifyJsPlugin({
+      minimize: true,
+      sourceMap: false,
+      mangle: true,
+      compress: {
+        warnings: false
+      }
     })
-  ],
-  resolve: {
-    alias: { 
-      vue: 'vue/dist/vue.js'
-    }
-  }
+  ]
 };
