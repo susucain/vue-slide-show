@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>vue-slide-show-demo</title>
+  <style type="text/css">
+    p {
+      font-size: 1.3em;
+      text-align: center;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-0">
+    <p>width和height为图片宽高，共5张图片，显示5张，不自动播放，space设为500，其余默认</p>
+    <slide-show 
+      :slides="slides" 
+      :width="width"
+      :height="height"
+      :autoplay="autoplay"
+      :display-count="displayCount"
+      :space="space">
+    </slide-show>
+  </div>
+  <div class="app-1">
+    <p>width和height为图片宽高，共5张图片，显示3张，自动播放，space设为400，lightBackground设为#eefe2e,其余默认</p>
+    <slide-show 
+      :slides="slides" 
+      :width="width"
+      :height="height"
+      :autoplay="autoplay"
+      :display-count="displayCount"
+      :light-background="lightBackground"
+      :space="space">
+    </slide-show>
+  </div>
+  <div class="app-2">
+    <p>宽高默认，共7个色块，显示5张，不自动播放，inverseScaling设为400，动画速度500ms，其余默认</p>
+    <slide-show 
+      :slides="slides" 
+      :animation-speed="animationSpeed" 
+      :autoplay="autoplay"
+      :display-count="displayCount"
+      :inverse-scaling="inverseScaling">
+    </slide-show>
+  </div>
+  <div class="app-3">
+    <p>宽高默认，共5个色块，显示5张，自动播放，space设为400，动画速度和播放速度设为500ms，禁用3d效果，其余默认</p>
+    <slide-show 
+      :slides="slides" 
+      :animation-speed="animationSpeed"
+      :autoplay-timeout="autoplayTimeout" 
+      :autoplay="autoplay"
+      :display-count="displayCount"
+      :disable3d="disable3d"
+      :space="space">
+    </slide-show>
+  </div>
+  <div class="app-4">
+    <p>width和height为图片宽高，共5张图片，显示5张，不自动播放，space设为500，bannerWidth设为1100px,设置了按钮的样式，其余默认</p>
+    <slide-show 
+      :slides="slides" 
+      :width="width"
+      :height="height"
+      :autoplay="autoplay"
+      :display-count="displayCount"
+      :space="space"
+      :banner-width="bannerWidth"
+      :button-style="buttonStyle"
+      :button-background="buttonBackground">
+    </slide-show>
+  </div>
+<script type="text/javascript" src="main.bundle.js"></script></body>
+</html>
