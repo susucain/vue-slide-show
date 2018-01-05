@@ -1,17 +1,17 @@
 <template>
   <div class="banner" :style="{width: bannerWidth}">
+    <div 
+      class="wrapper" 
+      :style="{width: `${width}px`, height: `${height}px`}"
+      @mouseover="stopPlay"
+      @mouseout="startAutoplay">
       <div 
-        class="wrapper" 
-        :style="{width: `${width}px`, height: `${height}px`}"
-        @mouseover="stopPlay"
-        @mouseout="startAutoplay">
-        <div 
-          v-for="(item, index) in slides" 
-          :key="index" 
-          :style="setSlideStyle(index)"
-          @click="goto(index)">
-        </div>
+        v-for="(item, index) in slides" 
+        :key="index" 
+        :style="setSlideStyle(index)"
+        @click="goto(index)">
       </div>
+    </div>
     <ul class="button" :style="buttonStyle">
       <li 
         v-for="(item, index) in slides" 
