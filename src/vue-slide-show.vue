@@ -143,7 +143,8 @@ export default {
       ? this.constolDisplayArr = this.shiftCircle(this.constolDisplayArr, move)
       : this.constolStyleArr = this.shiftCircle(this.constolStyleArr, -move)
 
-      this.nowIndex = index;
+      this.nowIndex = index
+      this.$emit('change-slide', index)
     },
     /**
      * 循环移动数组move位
@@ -185,7 +186,7 @@ export default {
             styles.opacity = 1
           }
         })
-        // index不再displayArr数组中的滑块隐藏
+        // index不在displayArr数组中的滑块隐藏
         if (!displayArr.includes(i)) {
           styles = this.calculatePosition(this.constolStyleArr[this.displayCount - 1])
           styles.visibility = 'hidden'

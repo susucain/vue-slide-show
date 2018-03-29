@@ -8,7 +8,7 @@ new Vue({
     width: 700,
     height: 180,
     autoplay: false,
-    displayCount: 5,
+    displayCount: 3,
     space: 500,
     slides: [
       {background: `url(${require('./images/1.jpg')}) no-repeat`},
@@ -17,6 +17,11 @@ new Vue({
       {background: `url(${require('./images/4.jpg')}) no-repeat`},
       {background: `url(${require('./images/5.jpg')}) no-repeat`}
     ]
+  },
+  methods: {
+    changeSlide (index) {
+      console.log(index)
+    }
   }
 })
 

@@ -32,6 +32,7 @@ module.exports = merge(BASE_CONFIG, {
       inject: 'body'
     })
   ],
+  // 独立构建
   resolve: {
     alias: { 
       vue: 'vue/dist/vue.js'

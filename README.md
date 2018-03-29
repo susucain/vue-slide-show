@@ -53,6 +53,12 @@ html结构，属性根据需要设置
 | buttonBackground | String         | rgba(255, 255, 255, .3) | 按钮背景颜色                              |
 | lightBackground  | String         | #01BDFF                 | 轮播到当前按钮对应的滑块时的背景颜色                  |
 
+## Events
+
+| 名称           | 描述        |
+| ------------ | --------- |
+| change-slide | 每当滑块切换时触发 |
+
 ## License
 
 MIT
