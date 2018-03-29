@@ -13,14 +13,15 @@
 </head>
 <body>
   <div class="app-0">
-    <p>width和height为图片宽高，共5张图片，显示5张，不自动播放，space设为500，其余默认</p>
+    <p>width和height为图片宽高，共5张图片，显示5张，不自动播放，space设为500，其余默认, 滑块每切换一次，在控制台打印出切换到的滑块编号</p>
     <slide-show 
       :slides="slides" 
       :width="width"
       :height="height"
       :autoplay="autoplay"
       :display-count="displayCount"
-      :space="space">
+      :space="space"
+      v-on:change-slide="changeSlide">
     </slide-show>
   </div>
   <div class="app-1">
