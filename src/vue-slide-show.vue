@@ -16,7 +16,8 @@
       <li 
         v-for="(item, index) in slides" 
         @click="goto(index)"
-        :style="{background: nowIndex === index? lightBackground: buttonBackground}">
+        :style="{background: nowIndex === index? lightBackground: buttonBackground}"
+        :key="index">
       </li>
     </ul>
   </div>
