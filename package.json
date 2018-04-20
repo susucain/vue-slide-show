@@ -4,7 +4,7 @@
   "description": "A slider component for vue.js.",
   "main": "dist/vue-slide-show.js",
   "scripts": {
-    "dev": "webpack-dev-server --config ./webpack.dev.config.js --hot --inline",
+    "dev": "webpack-dev-server --config ./webpack.dev.config.js --progress",
     "build": "webpack --progress --colors"
   },
   "repository": {

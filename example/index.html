@@ -4,72 +4,112 @@
   <meta charset="UTF-8">
   <title>vue-slide-show-demo</title>
   <style type="text/css">
+    #root {
+      width: 1200px;
+      margin: 0 auto;
+    }
+    .field-title {
+      border-color: #e6e6e6;
+      border-width: 1px 0 0;
+    }
+    .field-title legend {
+      margin-left: 20px;
+      padding: 0 10px;
+      font-size: 20px;
+      font-weight: 300;
+    }
+    label,
+    input {
+      color: #555;
+    }
+    input {
+      border: 1px solid #c9c9c9;
+      height: 30px;
+      padding: 3px 3px 3px 5px;
+      outline: none;
+      box-shadow: inset 0px 1px 4px #ECECEC;
+      -webkit-box-shadow: inset 0px 1px 4px #ECECEC;
+      -moz-box-shadow: inset 0px 1px 4px #ECECEC;
+    }
+    button {
+      height: 38px;
+      padding: 0 18px;
+      border: 1px solid #C9C9C9;
+      outline: none;
+      border-radius: 2px;
+      line-height: 38px;
+      color: #555;
+      background-color: #fff;
+      cursor: pointer;
+    }
+    button:hover {
+      border-color: #009688;
+      color: #333;
+    }
     p {
-      font-size: 1.3em;
-      text-align: center;
-      color: #666;
+      margin: 0 0 1em;
     }
   </style>
 </head>
 <body>
-  <div class="app-0">
-    <p>width和height为图片宽高，共5张图片，显示5张，不自动播放，space设为500，其余默认</p>
-    <slide-show 
-      :slides="slides" 
+  <div id="root">
+    <fieldset class="field-title">
+      <legend>设置</legend>
+    </fieldset>
+    <p>
+      <label>
+        滑块数目：
+        <input type="number" v-model.number="slidesNumber" :max="isImage? 5: 20">
+      </label>
+      <label>
+        显示数目：
+        <input type="number" v-model.number="displayCount" :max="slidesNumber">
+      </label>
+      <label>
+        width：
+        <input type="number" name="width" v-model.number="width" step="20">
+      </label>
+      <label>
+        height：
+        <input type="number" name="height" v-model.number="height" step="20">
+      </label>
+    </p>
+    <p>
+      <label>
+        滑块x坐标偏移量：
+        <input type="number" v-model.number="space" step="20">
+      </label>
+      <label>
+        滑块z坐标偏移量：
+        <input type="number" v-model.number="inverseScaling" step="20">
+      </label>
+    <label>
+      播放速度：
+      <input type="number" v-model.number="autoplayTimeout" step="500">
+    </label>
+    </p>
+
+    <fieldset class="field-title">
+      <legend>选项</legend>
+    </fieldset>
+    <p>
+      <button @click="setImageSlide">使用图片</button>
+      <button @click="setColorSlide">使用色块</button>
+      <button @click="setPlay">开始/停止轮播</button>
+      <button @click="setDim">是否启用3d</button>
+    </p>
+
+    <slide-show
+      :slides="slides"
       :width="width"
       :height="height"
       :autoplay="autoplay"
       :display-count="displayCount"
       :space="space"
-      v-on:change-slide="changeSlide">
-    </slide-show>
-  </div>
-  <div class="app-1">
-    <p>width和height为图片宽高，共5张图片，显示3张，自动播放，space设为400，lightBackground设为#eefe2e,其余默认</p>
-    <slide-show 
-      :slides="slides" 
-      :width="width"
-      :height="height"
-      :autoplay="autoplay"
-      :display-count="displayCount"
-      :light-background="lightBackground"
-      :space="space">
-    </slide-show>
-  </div>
-  <div class="app-2">
-    <p>宽高默认，共7个色块，显示5张，不自动播放，inverseScaling设为400，动画速度500ms，其余默认</p>
-    <slide-show 
-      :slides="slides" 
-      :animation-speed="animationSpeed" 
-      :autoplay="autoplay"
-      :display-count="displayCount"
-      :inverse-scaling="inverseScaling">
-    </slide-show>
-  </div>
-  <div class="app-3">
-    <p>宽高默认，共5个色块，显示5张，自动播放，space设为400，动画速度和播放速度设为500ms，禁用3d效果，其余默认</p>
-    <slide-show 
-      :slides="slides" 
-      :animation-speed="animationSpeed"
-      :autoplay-timeout="autoplayTimeout" 
-      :autoplay="autoplay"
-      :display-count="displayCount"
+      :inverse-scaling="inverseScaling"
       :disable3d="disable3d"
-      :space="space">
-    </slide-show>
-  </div>
-  <div class="app-4">
-    <p>width和height为图片宽高，共5张图片，显示5张，不自动播放，space设为500，bannerWidth设为1100px,设置了按钮的样式，其余默认</p>
-    <slide-show 
-      :slides="slides" 
-      :width="width"
-      :height="height"
-      :autoplay="autoplay"
-      :display-count="displayCount"
-      :space="space"
-      :banner-width="bannerWidth"
-      :button-style="buttonStyle"
-      :button-background="buttonBackground">
+      :autoplay-timeout="autoplayTimeout"
+    >
     </slide-show>
   </div>
 </body>

@@ -2,114 +2,64 @@ import Vue from 'vue'
 import SlideShow from '../src/vue-slide-show.vue'
 
 new Vue({
-  el: '.app-0',
+  el: '#root',
   components: {SlideShow},
   data: {
+    slidesNumber: 5,
+    displayCount: 5,
+    isImage: false,
     width: 700,
     height: 180,
     autoplay: false,
-    displayCount: 3,
-    space: 500,
-    slides: [
-      {background: `url(${require('./images/1.jpg')}) no-repeat`},
-      {background: `url(${require('./images/2.jpg')}) no-repeat`},
-      {background: `url(${require('./images/3.jpg')}) no-repeat`},
-      {background: `url(${require('./images/4.jpg')}) no-repeat`},
-      {background: `url(${require('./images/5.jpg')}) no-repeat`}
-    ]
+    space: 300,
+    inverseScaling: 200,
+    disable3d: false,
+    autoplayTimeout: 1500
+  },
+  computed: {
+    slides() {
+      let slidesArr = []
+      let len = this.slidesNumber
+
+      if (this.isImage) {
+        for (let i = 1; i <= len; i++) {
+          slidesArr.push({
+            background: `url(${require(`./images/${i}.jpg`)}) no-repeat`
+          })
+        }
+      } 
+      else {
+        for (let i = 0; i < len; i++) {
+          slidesArr.push({
+            // 生成随机颜色，4095的十六进制是#fff
+            background: `#${('00' 
+              + (Math.floor(Math.random() * 4096)).toString(16)).slice(-3)}`
+          })
+        }
+      }
+
+      return slidesArr
+    }
+  },
+  watch: {
+    slidesNumber(newVal, oldVal) {
+      if (newVal < this.displayCount) {
+        this.displayCount = newVal
+      }
+    }
   },
   methods: {
-    changeSlide (index) {
-      console.log(index)
-    }
-  }
-})
-
-new Vue({
-  el: '.app-1',
-  components: {SlideShow},
-  data: {
-    width: 700,
-    height: 180,
-    autoplay: true,
-    displayCount: 3,
-    lightBackground: '#eefe2e',
-    space: 300,
-    slides: [
-      {background: `url(${require('./images/1.jpg')}) no-repeat`},
-      {background: `url(${require('./images/2.jpg')}) no-repeat`},
-      {background: `url(${require('./images/3.jpg')}) no-repeat`},
-      {background: `url(${require('./images/4.jpg')}) no-repeat`},
-      {background: `url(${require('./images/5.jpg')}) no-repeat`}
-    ]
-  }
-})
-
-new Vue({
-  el: '.app-2',
-  components: {SlideShow},
-  data: {
-    animationSpeed: 500,
-    autoplay: false,
-    displayCount: 5,
-    inverseScaling: 400,
-    slides: [
-      {background: '#ccc'},
-      {background: '#f66'},
-      {background: '#6f6'},
-      {background: '#66f'},
-      {background: '#c69'},
-      {background: '#69c'},
-      {background: '#96c'}
-    ]
-  }
-})
-
-new Vue({
-  el: '.app-3',
-  components: {SlideShow},
-  data: {
-    animationSpeed: 500,
-    autoplayTimeout: 500,
-    autoplay: true,
-    displayCount: 5,
-    disable3d: true,
-    space: 200,
-    slides: [
-      {background: '#ccc'},
-      {background: '#f66'},
-      {background: '#6f6'},
-      {background: '#66f'},
-      {background: '#c69'},
-    ]
-  }
-})
-
-new Vue({
-  el: '.app-4',
-  components: {SlideShow},
-  data: {
-    width: 700,
-    height: 180,
-    autoplay: false,
-    displayCount: 5,
-    space: 500,
-    bannerWidth: '1100px',
-    buttonBackground: '#fff',
-    buttonStyle: {
-      'position': 'absolute',
-      'left': '50%',
-      'bottom': '5px',
-      'margin': 0,
-      'z-index': 999,
-      'transform': 'translateX(-50%)'
+    setDim() {
+      this.disable3d = !this.disable3d
     },
-    slides: [
-      {background: `url(${require('./images/1.jpg')}) no-repeat`},
-      {background: `url(${require('./images/2.jpg')}) no-repeat`},
-      {background: `url(${require('./images/3.jpg')}) no-repeat`},
-      {background: `url(${require('./images/4.jpg')}) no-repeat`},
-      {background: `url(${require('./images/5.jpg')}) no-repeat`}
-    ]
+    setImageSlide() {
+      this.isImage = true
+    },
+    setColorSlide() {
+      this.isImage = false
+    },
+    setPlay() {
+      this.autoplay = !this.autoplay
+    }
   }
 })

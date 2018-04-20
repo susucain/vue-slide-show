@@ -28,7 +28,7 @@ export default {
   props: {
     slides: {
       type: Array,
-      default: []
+      required: true
     },
     displayCount: {
       type: Number,
@@ -95,6 +95,44 @@ export default {
       constolDisplayArr: []
     }
   },
+  watch: {
+    /**
+     * 监控autoplay的变化，如果改变了autoplay的值，
+     * 则根据新值来启用或关闭轮播
+     *
+     * @param {boolean} autoplay的新值
+     */
+    autoplay(newValue) {
+      if (newValue) {
+        this.startAutoplay()
+      }
+      else {
+        this.stopPlay()
+      }
+    },
+    /**
+     * 监控autoplayTimeout(播放速度)，如果改变则应用设置
+     */
+    autoplayTimeout() {
+      if (this.autoplay) {
+        // 清除上一个的计时器
+        this.stopPlay()
+        this.startAutoplay()
+      }
+    },
+    /**
+     * 监控显示的滑块数，如果改变则重新填充控制数组
+     */
+    displayCount(newValue) {
+      this.getContolArr()
+    },
+    /**
+     * 监控传入的滑块对象（主要监控数目），如果改变则重新填充控制数组
+     */
+    slides() {
+      this.getContolArr()
+    }
+  },
   computed: {
     /**
      * 计算上一个滑块的index
@@ -127,8 +165,7 @@ export default {
      */
     hasHiddenSlides () {
       return this.slides.length > this.displayCount
-    },
-    
+    }
   },
   methods: {
     /**
@@ -234,17 +271,26 @@ export default {
         }
       }
     },
+    /**
+     * 填充两个控制数组的值
+     */
+    getContolArr() {
+      // 填充前清空数组
+      this.constolStyleArr.length = 0
+      let count = Math.floor(this.displayCount / 2)
+      for (let i = 0, len = this.displayCount; i < len; i++) {
+        this.constolStyleArr.push(i - count)
+      }
+
+      this.constolDisplayArr.length = 0
+      for (let i = 0, len = this.slides.length; i < len; i++) {
+        this.constolDisplayArr.push(i)
+      }
+    }
   },
   created () {
     // 实例创建完成后填充两个控制数组的值
-    let count = Math.floor(this.displayCount / 2)
-    for (let i = 0, len = this.displayCount; i < len; i++) {
-      this.constolStyleArr.push(i - count)
-    }
-
-    for (let i = 0, len = this.slides.length; i < len; i++) {
-      this.constolDisplayArr.push(i)
-    }
+    this.getContolArr()
   },
   mounted () {
     if (this.autoplay) {

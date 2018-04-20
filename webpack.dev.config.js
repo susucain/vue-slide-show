@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack')
 const merge = require( 'webpack-merge' )
 const HtmlWebpackPlugin = require( 'html-webpack-plugin' )
 const BASE_CONFIG = require( './webpack.config' )
@@ -9,9 +10,13 @@ module.exports = merge(BASE_CONFIG, {
     path: path.resolve(__dirname, 'example/dist'),
     filename: '[name].bundle.js'
   },
-  devtool: 'eval-source-map',
+  devtool: '#cheap-module-eval-source-map',
   devServer: {
-    contentBase: './example/dist'
+    hot: true,
+    overlay: {
+      warnings: true,
+      errors: true
+    }
   },
   module: {
     loaders: [
@@ -30,7 +35,9 @@ module.exports = merge(BASE_CONFIG, {
       filename: 'index.html',
       template: './example/index.html',
       inject: 'body'
-    })
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin()
   ],
   // 独立构建
   resolve: {
