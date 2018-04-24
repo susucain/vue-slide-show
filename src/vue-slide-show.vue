@@ -122,15 +122,19 @@ export default {
     },
     /**
      * 监控显示的滑块数，如果改变则重新填充控制数组
+     * 并重新计算nowIndex
      */
     displayCount(newValue) {
       this.getContolArr()
+      this.nowIndex = Math.floor(this.displayCount / 2)
     },
     /**
      * 监控传入的滑块对象（主要监控数目），如果改变则重新填充控制数组
+     * 由于控制数组重置，故nowIndex也要重新计算
      */
     slides() {
       this.getContolArr()
+      this.nowIndex = Math.floor(this.displayCount / 2)
     }
   },
   computed: {
@@ -293,6 +297,7 @@ export default {
     this.getContolArr()
   },
   mounted () {
+    console.log(this.nowIndex)
     if (this.autoplay) {
       this.startAutoplay()
     }

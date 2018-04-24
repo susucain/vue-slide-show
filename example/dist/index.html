@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>vue-slide-show-demo</title>
+  <style type="text/css">
+    #root {
+      width: 1200px;
+      margin: 0 auto;
+    }
+    .field-title {
+      border-color: #e6e6e6;
+      border-width: 1px 0 0;
+    }
+    .field-title legend {
+      margin-left: 20px;
+      padding: 0 10px;
+      font-size: 20px;
+      font-weight: 300;
+    }
+    label,
+    input {
+      color: #555;
+    }
+    input {
+      border: 1px solid #c9c9c9;
+      height: 30px;
+      padding: 3px 3px 3px 5px;
+      outline: none;
+      box-shadow: inset 0px 1px 4px #ECECEC;
+      -webkit-box-shadow: inset 0px 1px 4px #ECECEC;
+      -moz-box-shadow: inset 0px 1px 4px #ECECEC;
+    }
+    button {
+      height: 38px;
+      padding: 0 18px;
+      border: 1px solid #C9C9C9;
+      outline: none;
+      border-radius: 2px;
+      line-height: 38px;
+      color: #555;
+      background-color: #fff;
+      cursor: pointer;
+    }
+    button:hover {
+      border-color: #009688;
+      color: #333;
+    }
+    p {
+      margin: 0 0 1em;
+    }
+  </style>
+</head>
+<body>
+  <div id="root">
+    <fieldset class="field-title">
+      <legend>设置</legend>
+    </fieldset>
+    <p>
+      <label>
+        滑块数目：
+        <input type="number" v-model.number="slidesNumber" :max="isImage? 5: 20">
+      </label>
+      <label>
+        显示数目：
+        <input type="number" v-model.number="displayCount" :max="slidesNumber">
+      </label>
+      <label>
+        width：
+        <input type="number" name="width" v-model.number="width" step="20">
+      </label>
+      <label>
+        height：
+        <input type="number" name="height" v-model.number="height" step="20">
+      </label>
+    </p>
+    <p>
+      <label>
+        滑块x坐标偏移量：
+        <input type="number" v-model.number="space" step="20">
+      </label>
+      <label>
+        滑块z坐标偏移量：
+        <input type="number" v-model.number="inverseScaling" step="20">
+      </label>
+    <label>
+      播放速度：
+      <input type="number" v-model.number="autoplayTimeout" step="500">
+    </label>
+    </p>
+
+    <fieldset class="field-title">
+      <legend>选项</legend>
+    </fieldset>
+    <p>
+      <button @click="setImageSlide">使用图片</button>
+      <button @click="setColorSlide">使用色块</button>
+      <button @click="setPlay">开始/停止轮播</button>
+      <button @click="setDim">是否启用3d</button>
+    </p>
+
+    <slide-show
+      :slides="slides"
+      :width="width"
+      :height="height"
+      :autoplay="autoplay"
+      :display-count="displayCount"
+      :space="space"
+      :inverse-scaling="inverseScaling"
+      :disable3d="disable3d"
+      :autoplay-timeout="autoplayTimeout"
+    >
+    </slide-show>
+  </div>
+<script type="text/javascript" src="main.bundle.js"></script></body>
+</html>

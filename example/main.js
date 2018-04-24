@@ -53,7 +53,12 @@ new Vue({
       this.disable3d = !this.disable3d
     },
     setImageSlide() {
-      this.isImage = true
+      if (this.slidesNumber <= 5) {
+        this.isImage = true
+      }
+      else {
+        alert('抱歉，图片只有5张')
+      }
     },
     setColorSlide() {
       this.isImage = false
